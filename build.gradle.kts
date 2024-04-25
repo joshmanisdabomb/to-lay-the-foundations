@@ -2,10 +2,10 @@ import net.fabricmc.loom.api.LoomGradleExtensionAPI
 
 plugins {
     java
-    kotlin("jvm") version "1.8.22"
-    id("architectury-plugin") version "3.4-SNAPSHOT"
-    id("dev.architectury.loom") version "1.0-SNAPSHOT" apply false
-    id("com.github.johnrengelman.shadow") version "7.1.2" apply false
+    kotlin("jvm")
+    id("architectury-plugin")
+    id("dev.architectury.loom") apply false
+    id("com.github.johnrengelman.shadow") apply false
 }
 
 architectury {
@@ -16,7 +16,6 @@ subprojects {
     apply(plugin = "dev.architectury.loom")
 
     val loom = project.extensions.getByName<LoomGradleExtensionAPI>("loom")
-
 
     dependencies {
         "minecraft"("com.mojang:minecraft:${project.property("minecraft_version")}")
@@ -54,10 +53,10 @@ allprojects {
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
-        options.release.set(17)
+        options.release.set(rootProject.property("java_version").toString().toInt())
     }
     kotlin.target.compilations.all {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = rootProject.property("java_version").toString()
     }
 
     java {

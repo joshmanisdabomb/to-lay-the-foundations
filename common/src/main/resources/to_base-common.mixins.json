@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.jidb.to.base.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MixinTitleScreen"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

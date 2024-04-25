@@ -2,29 +2,29 @@
   "schemaVersion": 1,
   "id": "${mod_id}",
   "version": "${version}",
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "To Lay the Foundations",
+  "description": "This is a base mod required by the To series of mods by joshmanisdabomb.",
   "authors": [
-    "Me!"
+    "joshmanisdabomb"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://to.jidb.net/",
+    "sources": "https://github.com/joshmanisdabomb/to-lay-the-foundations"
   },
-  "license": "Insert License Here",
-  "icon": "assets/examplemod/icon.png",
+  "license": "proprietary",
+  "icon": "assets/${mod_id}/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       {
         "adapter": "kotlin",
-        "value": "net.examplemod.fabric.ExampleModFabric"
+        "value": "net.jidb.to.base.fabric.BaseToFabricMod"
       }
     ]
   },
   "mixins": [
-    "examplemod.mixins.json",
-    "examplemod-common.mixins.json"
+    "${mod_id}.mixins.json",
+    "${mod_id}-common.mixins.json"
   ],
   "depends": {
     "fabric": "*",

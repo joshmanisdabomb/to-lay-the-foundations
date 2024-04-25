@@ -1,22 +1,22 @@
 modLoader = "kotlinforforge"
 loaderVersion = "[4,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+issueTrackerURL = "https://github.com/joshmanisdabomb/to-lay-the-foundations/issues"
+license = "proprietary"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${version}"
-displayName = "Example Mod"
-authors = "Me!"
+displayName = "To Lay the Foundations"
+authors = "joshmanisdabomb"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+This is a base mod required by the To series of mods by joshmanisdabomb.
 '''
 #logoFile = ""
 
 [[dependencies.${mod_id}]]
 modId = "forge"
 mandatory = true
-versionRange = "[43,)"
+versionRange = "[49,)"
 ordering = "NONE"
 side = "BOTH"
 
