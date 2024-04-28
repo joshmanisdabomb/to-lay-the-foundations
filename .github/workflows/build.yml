@@ -56,4 +56,4 @@ jobs:
           url: ${{ secrets.BUILD_UPLOAD_ENDPOINT }}
           method: 'POST'
           data: '{"key": "${{ secrets.BUILD_UPLOAD_KEY }}", "repository": "${{ github.repository }}", "run_id": "${{ github.run_id }}", "run_number": "${{ github.run_number }}", "ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}"}'
-          files: '{"forge": "${{ github.workspace }}/build/libs/forge.jar", "fabric": "${{ github.workspace }}/build/libs/fabric.jar", "quilt": "${{ github.workspace }}/build/libs/quilt.jar", "sources": "${{ github.workspace }}/build/libs/sources.jar", "gradle": "${{ github.workspace }}/gradle.properties"}'
+          files: '{"forge": "${{ github.workspace }}/build/libs/forge.jar", "fabric": "${{ github.workspace }}/build/libs/fabric.jar", "quilt": "${{ github.workspace }}/build/libs/quilt.jar", "source": "${{ github.workspace }}/build/libs/sources.jar", "gradle": "${{ github.workspace }}/gradle.properties"}'
