@@ -34,7 +34,7 @@ jobs:
         run: cp gradle.properties.ci gradle.properties
         
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2.3.0
+        uses: gradle/gradle-build-action@v3.3.2
         with:
           arguments: build
                 
