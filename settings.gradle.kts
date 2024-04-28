@@ -19,5 +19,6 @@ include("fabric-like")
 include("fabric")
 include("quilt")
 include("forge")
+include("hybrid")
 
 rootProject.name = extra["mod_id"].toString()

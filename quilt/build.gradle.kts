@@ -91,6 +91,10 @@ tasks.sourcesJar {
     val commonSources = project(":common").tasks.getByName<Jar>("sourcesJar")
     dependsOn(commonSources)
     from(commonSources.archiveFile.map { zipTree(it) })
+
+    val fabriclikeSources = project(":fabric-like").tasks.getByName<Jar>("sourcesJar")
+    dependsOn(fabriclikeSources)
+    from(fabriclikeSources.archiveFile.map { zipTree(it) })
 }
 
 components.getByName("java") {
