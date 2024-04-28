@@ -1,0 +1,59 @@
+name: Build Mod
+
+on:
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+        
+      - name: Executify Gradle
+        run: chmod +x ./gradlew
+                
+      - name: Decrease JVM Memory Usage
+        run: sed '2 s/.*/org.gradle.jvmargs=-Xms1G -Xmx3G/' gradle.properties > gradle.properties.ci
+                
+      - name: Commit Gradle Property Changes
+        run: cp gradle.properties.ci gradle.properties
+                
+      - name: Decrease Kotlin Memory Usage
+        run: sed '3 s/.*/kotlin.daemon.jvm.options=-Xms1G -Xmx2G/' gradle.properties > gradle.properties.ci
+                
+      - name: Commit Gradle Property Changes
+        run: cp gradle.properties.ci gradle.properties
+        
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v3.3.2
+        with:
+          arguments: build
+                
+      - name: Rename Source Jar
+        run: mv hybrid/build/libs/*-sources.jar build/libs/sources.jar
+                
+      - name: Rename Forge Jar
+        run: rm forge/build/libs/*-{sources,shadow}.jar && mv forge/build/libs/*.jar build/libs/forge.jar
+
+      - name: Rename Fabric Jar
+        run: rm fabric/build/libs/*-{sources,shadow}.jar && mv fabric/build/libs/*.jar build/libs/fabric.jar
+
+      - name: Rename Quilt Jar
+        run: rm quilt/build/libs/*-{sources,shadow}.jar && mv quilt/build/libs/*.jar build/libs/quilt.jar
+        
+      - name: Deploy Built Jars
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.BUILD_UPLOAD_ENDPOINT }}
+          method: 'POST'
+          data: '{"key": "${{ secrets.BUILD_UPLOAD_KEY }}", "repository": "${{ github.repository }}", "run_id": "${{ github.run_id }}", "run_number": "${{ github.run_number }}", "ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}"}'
+          files: '{"forge": "${{ github.workspace }}/build/libs/forge.jar", "fabric": "${{ github.workspace }}/build/libs/fabric.jar", "quilt": "${{ github.workspace }}/build/libs/quilt.jar", "source": "${{ github.workspace }}/build/libs/sources.jar", "gradle": "${{ github.workspace }}/gradle.properties"}'
