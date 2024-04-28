@@ -22,7 +22,7 @@
       "init": [
         {
           "adapter": "kotlin",
-          "value": "net.jidb.to.base.quilt.BaseToQuiltMod"
+          "value": "net.jidb.to.base.quilt.ToBaseQuiltMod"
         }
       ]
     },
