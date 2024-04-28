@@ -20,6 +20,12 @@
         "adapter": "kotlin",
         "value": "net.jidb.to.base.fabric.ToBaseFabricMod"
       }
+    ],
+    "fabric-datagen": [
+      {
+        "adapter": "kotlin",
+        "value": "net.jidb.to.base.fabric.data.ToBaseDataGenerator"
+      }
     ]
   },
   "mixins": [

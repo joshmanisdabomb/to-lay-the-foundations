@@ -100,3 +100,7 @@ components.getByName("java") {
         skip()
     }
 }
+
+fabricApi {
+    configureDataGeneration()
+}

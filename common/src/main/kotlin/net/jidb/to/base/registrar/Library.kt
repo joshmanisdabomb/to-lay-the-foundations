@@ -1,6 +1,8 @@
 package net.jidb.to.base.registrar
 
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
@@ -29,8 +31,14 @@ abstract class Library<I : Any, V : Any>(val modid: String) {
 
     protected abstract fun build(entry: LibraryEntry): () -> V
 
-    protected open fun getTranslation(entry: LibraryEntry): Component {
-        throw LibraryException("${entry.name} in ${this@Library} tried to get a translation, but the method was not implemented.")
+    protected open fun getComponent(entry: LibraryEntry) = Component.translatable(getTranslationKey(entry))
+
+    protected open fun getTranslationKey(entry: LibraryEntry): String {
+        throw LibraryException("${entry.name} in ${this@Library} tried to get a translation key, but the method was not implemented.")
+    }
+
+    protected open fun getResourceKey(entry: LibraryEntry): ResourceKey<V> {
+        throw LibraryException("${entry.name} in ${this@Library} tried to get a resource key, but the method was not implemented.")
     }
 
     override fun toString() = "$modid ${this.javaClass}"
@@ -49,7 +57,10 @@ abstract class Library<I : Any, V : Any>(val modid: String) {
             private set
         val value by lazy { getter() }
 
-        val translation by lazy { getTranslation(this) }
+        val identifier by lazy { ResourceLocation(modid, name) }
+        val registryKey by lazy { getResourceKey(this) }
+        val component by lazy { getComponent(this) }
+        val translationKey by lazy { getResourceKey(this) }
 
         operator fun provideDelegate(library: Library<I, V>, property: KProperty<*>): LibraryEntry {
             this.property = property
