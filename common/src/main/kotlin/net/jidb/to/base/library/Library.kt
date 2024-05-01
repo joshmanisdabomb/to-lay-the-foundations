@@ -1,4 +1,4 @@
-package net.jidb.to.base.registrar
+package net.jidb.to.base.library
 
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -6,21 +6,22 @@ import net.minecraft.resources.ResourceLocation
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
-abstract class Library<I : Any, V : Any>(val modid: String) {
+sealed class Library<I : Any, V : Any>(val modid: String) {
 
-    private val _entries = mutableMapOf<String, LibraryEntry>()
+    internal val _entries = mutableMapOf<String, LibraryEntry<out I, out V>>()
     val entries by lazy { _entries.toMap() }
     val values by lazy { entries.mapValues { it.value.value } }
 
     var initialised = false
         private set
 
-    fun build(): Map<String, LibraryEntry> {
+    fun build(): Map<String, LibraryEntry<out I, out V>> {
         if (initialised) {
             throw LibraryException("${this@Library} is already built.")
         }
         for (entry in _entries.values) {
             entry.build()
+            afterBuild(entry)
         }
         initialised = true
         afterBuild()
@@ -29,21 +30,25 @@ abstract class Library<I : Any, V : Any>(val modid: String) {
 
     open fun afterBuild() = Unit
 
-    protected abstract fun build(entry: LibraryEntry): () -> V
+    open fun afterBuild(entry: LibraryEntry<out I, out V>) = Unit
 
-    protected open fun getComponent(entry: LibraryEntry) = Component.translatable(getTranslationKey(entry))
+    open fun getComponent(entry: LibraryEntry<out I, out V>) = Component.translatable(getTranslationKey(entry))
 
-    protected open fun getTranslationKey(entry: LibraryEntry): String {
+    open fun getTranslationKey(entry: LibraryEntry<out I, out V>): String {
         throw LibraryException("${entry.name} in ${this@Library} tried to get a translation key, but the method was not implemented.")
     }
 
-    protected open fun getResourceKey(entry: LibraryEntry): ResourceKey<V> {
+    open fun getResourceKey(entry: LibraryEntry<out I, out V>): ResourceKey<V> {
         throw LibraryException("${entry.name} in ${this@Library} tried to get a resource key, but the method was not implemented.")
     }
 
     override fun toString() = "$modid ${this.javaClass}"
 
-    open inner class LibraryEntry(val initial: (LibraryEntry) -> I) {
+    protected operator fun <J : I, W : V> invoke(builder: (J) -> W, initial: (LibraryEntry<J, W>) -> J): LibraryEntry<J, W> {
+        return LibraryEntry(builder, initial)
+    }
+
+    inner class LibraryEntry<J : I, W : V>(val builder: (J) -> W, val initial: (LibraryEntry<J, W>) -> J) {
 
         lateinit var property: KProperty<*>
             private set
@@ -53,23 +58,23 @@ abstract class Library<I : Any, V : Any>(val modid: String) {
 
         var initialised = false
             private set
-        lateinit var getter: () -> V
+        lateinit var getter: () -> W
             private set
         val value by lazy { getter() }
 
         val identifier by lazy { ResourceLocation(modid, name) }
         val registryKey by lazy { getResourceKey(this) }
         val component by lazy { getComponent(this) }
-        val translationKey by lazy { getResourceKey(this) }
+        val translationKey by lazy { getTranslationKey(this) }
 
-        operator fun provideDelegate(library: Library<I, V>, property: KProperty<*>): LibraryEntry {
+        operator fun provideDelegate(library: Library<I, V>, property: KProperty<*>): LibraryEntry<J, W> {
             this.property = property
-            this.index = _entries.size
-            _entries[name] = this
+            this.index = library._entries.size
+            library._entries[name] = this
             return this
         }
 
-        operator fun getValue(library: Library<I, V>, property: KProperty<*>): V {
+        operator fun getValue(library: Library<I, V>, property: KProperty<*>): W {
             return value
         }
 
@@ -77,7 +82,7 @@ abstract class Library<I : Any, V : Any>(val modid: String) {
             if (initialised) {
                 throw LibraryException("${property.name} in ${this@Library} is already built.")
             }
-            getter = this@Library.build(this)
+            getter = { builder(initial(this)) }
             initialised = true
         }
 
