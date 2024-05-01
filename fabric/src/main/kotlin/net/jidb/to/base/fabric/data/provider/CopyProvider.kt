@@ -1,11 +1,10 @@
-package net.jidb.to.base.fabric.data
+package net.jidb.to.base.fabric.data.provider
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataProvider
 import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
-import kotlin.io.path.CopyActionResult
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.copyToRecursively
 import kotlin.io.path.deleteRecursively
