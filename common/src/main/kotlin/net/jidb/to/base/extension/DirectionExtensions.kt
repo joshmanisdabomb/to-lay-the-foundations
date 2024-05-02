@@ -28,6 +28,14 @@ val Direction.perpendiculars get() = perps[this]!!
 val Direction.booleanProperty get() = properties[this]!!
 
 val horizontalDirections = arrayOf(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST)
+val Direction.horizontalIndex get() = horizontalDirections.indexOf(this).dropNegative()
+
+operator fun Direction.plus(other: Direction): Direction {
+    if (this.axis.isVertical && other.axis.isVertical && this != other) return Direction.NORTH
+    if (this.axis.isVertical) return this
+    if (other.axis.isVertical) return other
+    return horizontalDirections.loopGet(this.horizontalIndex!! + other.horizontalIndex!!)
+}
 
 fun Direction.pose(stack: PoseStack) {
     when (this) {

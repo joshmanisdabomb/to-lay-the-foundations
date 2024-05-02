@@ -1,6 +1,7 @@
 package net.jidb.to.base
 
 import net.jidb.to.base.ExpectPlatform.getConfigDirectory
+import net.jidb.to.base.impl.ToBaseBlockLibrary
 import net.jidb.to.base.impl.ToBaseCreativeTabLibrary
 import net.jidb.to.base.impl.ToBaseItemLibrary
 
@@ -10,6 +11,7 @@ object ToBaseMod {
     fun init() {
         ToBaseCreativeTabLibrary.build()
         ToBaseItemLibrary.build()
+        ToBaseBlockLibrary.build()
 
         println("CONFIG DIR: ${getConfigDirectory().toAbsolutePath().normalize()}")
     }

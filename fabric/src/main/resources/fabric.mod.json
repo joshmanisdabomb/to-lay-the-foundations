@@ -24,7 +24,7 @@
     "fabric-datagen": [
       {
         "adapter": "kotlin",
-        "value": "net.jidb.to.base.fabric.data.ToBaseDataGenerator"
+        "value": "net.jidb.to.base.fabric.impl.data.ToBaseDataGenerator"
       }
     ]
   },

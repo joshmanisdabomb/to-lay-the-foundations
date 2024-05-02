@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "to_base:block/test_block_4",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "to_base:block/test_block_4"
+    },
+    "axis=z": {
+      "model": "to_base:block/test_block_4",
+      "x": 90
+    }
+  }
+}

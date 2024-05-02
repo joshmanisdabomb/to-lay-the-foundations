@@ -1,4 +1,8 @@
 {
+  "block.to_base.test_block": "Test Block",
+  "block.to_base.test_block_2": "Test Block 2",
+  "block.to_base.test_block_3": "Test Block 3",
+  "block.to_base.test_block_4": "Test Block 4",
   "item.to_base.test_item": "Test Item",
   "itemGroup.to_base.tab": "To Lay the Foundations"
 }
