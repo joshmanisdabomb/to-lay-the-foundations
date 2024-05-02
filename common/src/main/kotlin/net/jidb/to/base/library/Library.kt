@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation
 import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
-sealed class Library<I : Any, V : Any>(val modid: String) {
+sealed class Library<I, V>(val modid: String) {
 
     internal val _entries = mutableMapOf<String, LibraryEntry<out I, out V>>()
     val entries by lazy { _entries.toMap() }

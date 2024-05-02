@@ -1,6 +1,6 @@
 package net.jidb.to.base.library
 
-interface SimpleLibraryBuilder<T : Any> {
+interface SimpleLibraryBuilder<T> {
 
     fun <U : T> i(input: U) = input
 

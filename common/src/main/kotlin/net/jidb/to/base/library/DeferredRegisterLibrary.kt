@@ -4,7 +4,7 @@ import dev.architectury.registry.registries.DeferredRegister
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 
-sealed class DeferredRegisterLibrary<I : Any, V : Any>(modid: String, val registryId: ResourceKey<Registry<V>>) : Library<I, V>(modid) {
+sealed class DeferredRegisterLibrary<I, V>(modid: String, val registryId: ResourceKey<Registry<V>>) : Library<I, V>(modid) {
 
     val registry = DeferredRegister.create(modid, registryId)
 
