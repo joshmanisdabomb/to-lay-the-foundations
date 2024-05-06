@@ -3,9 +3,10 @@
   "package": "net.jidb.to.base.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "MixinTitleScreen"
   ],
   "mixins": [
+    "data.TexturedModelAccessor",
+    "data.BlockModelGeneratorsAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,7 +1,6 @@
-package net.jidb.to.base.fabric.data.models
+package net.jidb.to.base.data.models
 
 import net.minecraft.data.models.model.ModelTemplate
-import net.minecraft.data.models.model.ModelTemplates
 import net.minecraft.data.models.model.TextureSlot
 import net.minecraft.resources.ResourceLocation
 import java.util.*

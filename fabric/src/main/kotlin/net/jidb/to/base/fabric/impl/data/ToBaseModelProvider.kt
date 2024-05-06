@@ -2,7 +2,7 @@ package net.jidb.to.base.fabric.impl.data
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider
-import net.jidb.to.base.fabric.data.models.ExtendedBlockModelGenerator
+import net.jidb.to.base.data.models.ExtendedBlockModelGenerator
 import net.jidb.to.base.impl.ToBaseBlockLibrary
 import net.jidb.to.base.impl.ToBaseItemLibrary
 import net.minecraft.data.models.BlockModelGenerators

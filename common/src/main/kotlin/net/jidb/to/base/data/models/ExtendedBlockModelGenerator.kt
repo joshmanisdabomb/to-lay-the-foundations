@@ -1,4 +1,4 @@
-package net.jidb.to.base.fabric.data.models
+package net.jidb.to.base.data.models
 
 import net.jidb.to.base.extension.horizontalDirections
 import net.jidb.to.base.extension.horizontalIndex
@@ -11,12 +11,11 @@ import net.minecraft.data.models.blockstates.VariantProperties.Rotation
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.Property
 
 class ExtendedBlockModelGenerator(val generator: BlockModelGenerators) {
 
     fun createHorizontalBlock(block: Block, model: TexturedModel.Provider = TexturedModel.ORIENTABLE, direction: Direction = Direction.NORTH) {
-        val loc = model.create(block, generator.modelOutput)
+        val loc = model.create(block, (generator as net.jidb.to.base.mixin.data.BlockModelGeneratorsAccessor).modelOutput)
         generator.blockStateOutput.accept(
             MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, loc))
                 .with(createHorizontalDispatch(direction))
@@ -24,7 +23,7 @@ class ExtendedBlockModelGenerator(val generator: BlockModelGenerators) {
     }
 
     fun createDirectionalBlock(block: Block, model: TexturedModel.Provider = ExtendedTexturedModelProviders.CUBE_ORIENTABLE_VERTICAL, direction: Direction = Direction.UP) {
-        val loc = model.create(block, generator.modelOutput)
+        val loc = model.create(block, (generator as net.jidb.to.base.mixin.data.BlockModelGeneratorsAccessor).modelOutput)
         generator.blockStateOutput.accept(
             MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, loc))
                 .with(createDirectionalDispatch(direction))

@@ -3,8 +3,8 @@ package net.jidb.to.base.fabric.impl.data
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
 import net.jidb.to.base.ToBaseMod
-import net.jidb.to.base.fabric.data.provider.CopyProvider
-import net.jidb.to.base.fabric.data.provider.DeleteProvider
+import net.jidb.to.base.data.provider.CopyProvider
+import net.jidb.to.base.data.provider.DeleteProvider
 import java.nio.file.Path
 
 object ToBaseDataGenerator : DataGeneratorEntrypoint {
