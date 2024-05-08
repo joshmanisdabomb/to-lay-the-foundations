@@ -13,6 +13,7 @@ object ToBaseDataGenerator : DataGeneratorEntrypoint {
 
         pack.addProvider(::ToBaseLanguageProvider)
         pack.addProvider(::ToBaseModelProvider)
+        pack.addProvider(::ToBaseWikiProvider)
         pack.addProvider(DeleteProvider.factory {
             val resources = Path.of(it.toString().replace("fabric", "common").replace("generated", "resources"))
             val assets = resources.resolve("assets/${ToBaseMod.MOD_ID}")

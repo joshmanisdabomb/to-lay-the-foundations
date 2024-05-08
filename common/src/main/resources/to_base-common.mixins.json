@@ -5,8 +5,10 @@
   "client": [
   ],
   "mixins": [
-    "data.TexturedModelAccessor",
-    "data.BlockModelGeneratorsAccessor"
+    "BlockStateBaseAccessor",
+    "FireBlockAccessor",
+    "data.BlockModelGeneratorsAccessor",
+    "data.TexturedModelAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
