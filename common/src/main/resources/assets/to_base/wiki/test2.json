@@ -1,0 +1,205 @@
+{
+  "pages": {
+    "to_base": {
+      "content": {
+        "en_us": {
+          "type": "compound",
+          "fragments": [
+            {
+              "type": "compound",
+              "fragments": [
+                {
+                  "type": "compound",
+                  "fragments": [
+                    {
+                      "type": "compound",
+                      "fragments": [
+                        {
+                          "type": "compound",
+                          "fragments": [
+                            {
+                              "type": "text",
+                              "component": {
+                                "translate": "block.to_base.test_block_2"
+                              },
+                              "refer": {
+                                "identifier": "to_base:test_block_2",
+                                "registry": "minecraft:block"
+                              }
+                            },
+                            {
+                              "type": "text",
+                              "component": {
+                                "translate": "wiki.to_base.page.test2.to_base.2",
+                                "with": [
+                                  "block"
+                                ]
+                              }
+                            },
+                            {
+                              "type": "text",
+                              "component": {
+                                "translate": "wiki.to_base.constant.introduced"
+                              }
+                            },
+                            {
+                              "type": "text",
+                              "component": {
+                                "translate": "wiki.to_base.constant.reintroduced"
+                              }
+                            },
+                            {
+                              "type": "text",
+                              "component": {
+                                "translate": "wiki.to_base.constant.removed"
+                              }
+                            }
+                          ],
+                          "paragraph": false
+                        },
+                        {
+                          "type": "text",
+                          "component": {
+                            "translate": "wiki.to_base.page.test2.to_base.3"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "component": {
+                            "translate": "author.to_base.joshmanisdabomb"
+                          },
+                          "refer": {
+                            "identifier": "to_base:joshmanisdabomb",
+                            "registry": "to_base:author"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "component": {
+                            "translate": "wiki.to_base.page.test2.to_base.4"
+                          }
+                        }
+                      ],
+                      "paragraph": false
+                    }
+                  ],
+                  "paragraph": true
+                },
+                {
+                  "type": "compound",
+                  "fragments": [
+                    {
+                      "type": "compound",
+                      "fragments": [
+                        {
+                          "type": "text",
+                          "component": {
+                            "translate": "block.to_base.test_block_2"
+                          },
+                          "refer": {
+                            "identifier": "to_base:test_block_2",
+                            "registry": "minecraft:block"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "component": {
+                            "translate": "wiki.to_base.page.test2.to_base.5"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "component": {
+                            "translate": "tag.minecraft.to_base.test_blocks"
+                          },
+                          "refer": {
+                            "identifier": "minecraft:to_base/test_blocks",
+                            "registry": "to_base:tag"
+                          }
+                        },
+                        {
+                          "type": "text",
+                          "component": {
+                            "translate": "wiki.to_base.page.test2.to_base.6"
+                          }
+                        }
+                      ],
+                      "paragraph": false
+                    }
+                  ],
+                  "paragraph": true
+                }
+              ],
+              "heading": {
+                "translate": "wiki.to_base.page.test2.to_base.1"
+              },
+              "paragraph": false
+            }
+          ],
+          "paragraph": false
+        }
+      },
+      "flavor": {
+        "translate": "wiki.to_base.page.test2.to_base.0"
+      },
+      "name": {
+        "translate": "block.to_base.test_block_2"
+      },
+      "subjects": [
+        {
+          "attributes": {
+            "flammability": {},
+            "friction": 0.6,
+            "hardness": 0.5,
+            "rarity": "common",
+            "resistance": 0.5,
+            "stack_size": 64,
+            "states": [
+              {
+                "default": true,
+                "light": 0,
+                "map_color": 15066419,
+                "properties": {
+                  "facing": "north"
+                }
+              },
+              {
+                "default": false,
+                "light": 0,
+                "map_color": 15066419,
+                "properties": {
+                  "facing": "south"
+                }
+              },
+              {
+                "default": false,
+                "light": 0,
+                "map_color": 15066419,
+                "properties": {
+                  "facing": "west"
+                }
+              },
+              {
+                "default": false,
+                "light": 0,
+                "map_color": 15066419,
+                "properties": {
+                  "facing": "east"
+                }
+              }
+            ],
+            "tags": {
+              "minecraft:block": [],
+              "minecraft:item": []
+            }
+          },
+          "identifier": "to_base:test_block_2",
+          "order": 1,
+          "registry": "minecraft:block",
+          "renewable": false
+        }
+      ],
+      "tags": []
+    }
+  }
+}

@@ -1,10 +1,9 @@
-package net.jidb.to.base.wiki
+package net.jidb.to.base.wiki.changelog
 
 import com.google.gson.JsonObject
 import net.jidb.to.base.convenience.json.JsonSerialisable
 import net.jidb.to.base.extension.addSerialisable
-
-typealias ModVersion = String
+import net.jidb.to.base.wiki.WikiArticle
 
 class WikiChangelog(val map: Map<WikiArticle, WikiChangelogEntry>) : JsonSerialisable {
 

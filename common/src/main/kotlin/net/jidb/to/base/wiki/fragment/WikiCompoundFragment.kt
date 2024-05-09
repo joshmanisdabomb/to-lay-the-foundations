@@ -1,11 +1,11 @@
-package net.jidb.to.base.wiki
+package net.jidb.to.base.wiki.fragment
 
 import com.google.gson.JsonObject
 import net.jidb.to.base.extension.addSerialisableArray
 import net.jidb.to.base.extension.addOrNull
 import net.minecraft.network.chat.Component
 
-class WikiCompoundFragnent(vararg val fragments: WikiFragment, val paragraph: Boolean = false, val heading: Component? = null) : WikiFragment() {
+class WikiCompoundFragment(vararg val fragments: WikiFragment, val paragraph: Boolean = false, val heading: Component? = null) : WikiFragment() {
 
     override val type = "compound"
 

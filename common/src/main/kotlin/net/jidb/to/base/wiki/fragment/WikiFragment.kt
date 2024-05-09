@@ -1,4 +1,4 @@
-package net.jidb.to.base.wiki
+package net.jidb.to.base.wiki.fragment
 
 import com.google.gson.JsonObject
 import net.jidb.to.base.convenience.json.JsonSerialisable

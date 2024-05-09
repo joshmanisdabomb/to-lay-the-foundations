@@ -15,7 +15,7 @@
                 {
                   "type": "text",
                   "component": "good",
-                  "link": {
+                  "refer": {
                     "identifier": "minecraft:diamond_block",
                     "registry": "minecraft:block"
                   }
@@ -36,7 +36,7 @@
       },
       "flavor": "The first of many!",
       "header": {
-        "location": "to_base:wasteland_header_image",
+        "identifier": "to_base:wasteland_header_image",
         "registry": "to_base:image"
       },
       "name": {

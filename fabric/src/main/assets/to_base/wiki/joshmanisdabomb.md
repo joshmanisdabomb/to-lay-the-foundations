@@ -1,0 +1,2 @@
+# Introduction
+{"self": true} is the author of the {"registry": "to_base:tag", "identifier": "to_base/to_mods", "text": "To series of mods"}, as well as legacy mods {"registry": "to_base:mod", "identifier": "lcc:lcc"},  {"registry": "to_base:mod", "identifier": "lcc:lcc_forge"}, {"registry": "to_base:mod", "identifier": "aimagg:aimagg"} and {"registry": "to_base:mod", "identifier": "yam:yam"}. Josh has been modding Minecraft since 1.6 released in 2013.

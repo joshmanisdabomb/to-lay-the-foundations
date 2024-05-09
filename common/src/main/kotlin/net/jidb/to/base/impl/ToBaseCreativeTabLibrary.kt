@@ -9,14 +9,16 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 
-object ToBaseCreativeTabLibrary : AdvancedDeferredRegisterLibrary<(CreativeModeTab.Builder) -> Unit, CreativeModeTab>(ToBaseMod.MOD_ID, Registries.CREATIVE_MODE_TAB) {
+private typealias CreativeTabBuilderConsumer = (CreativeModeTab.Builder) -> Unit
+
+object ToBaseCreativeTabLibrary : AdvancedDeferredRegisterLibrary<CreativeTabBuilderConsumer, CreativeModeTab>(ToBaseMod.MOD_ID, Registries.CREATIVE_MODE_TAB) {
 
     val tab: CreativeModeTab by this(::i) { { tab ->
         tab.title(it.component).icon { ItemStack(ToBaseItemLibrary.test_item) }
     } }
 
-    override fun <J : (CreativeModeTab.Builder) -> Unit, W : CreativeModeTab> i(input: J) = CreativeTabRegistry.create(input) as W
+    override fun <J : CreativeTabBuilderConsumer> i(entry: LibraryEntry<out CreativeTabBuilderConsumer, out CreativeModeTab>, input: J): CreativeModeTab = CreativeTabRegistry.create(input)
 
-    override fun getTranslationKey(entry: LibraryEntry<out (CreativeModeTab.Builder) -> Unit, out CreativeModeTab>) = "itemGroup.${modid}.${entry.name}"
+    override fun getTranslationKey(entry: LibraryEntry<out CreativeTabBuilderConsumer, out CreativeModeTab>) = "itemGroup.${modid}.${entry.name}"
 
 }

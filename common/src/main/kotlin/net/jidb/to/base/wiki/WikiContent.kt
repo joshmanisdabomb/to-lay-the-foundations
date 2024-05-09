@@ -3,6 +3,7 @@ package net.jidb.to.base.wiki
 import com.google.gson.JsonObject
 import net.jidb.to.base.convenience.json.JsonSerialisable
 import net.jidb.to.base.extension.addSerialisable
+import net.jidb.to.base.wiki.fragment.WikiFragment
 
 data class WikiContent(val fragments: Map<String, WikiFragment>) : JsonSerialisable {
 

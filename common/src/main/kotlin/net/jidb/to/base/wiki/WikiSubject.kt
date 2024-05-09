@@ -6,32 +6,34 @@ import net.jidb.to.base.convenience.json.JsonSerialisable
 import net.jidb.to.base.extension.*
 import net.jidb.to.base.mixin.BlockStateBaseAccessor
 import net.jidb.to.base.mixin.FireBlockAccessor
+import net.jidb.to.base.wiki.reference.WikiReference
 import net.minecraft.Util
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 
-open class WikiSubject<T : Any>(val registry: Registry<T>, val value: T, val renewable: Boolean? = null, val order: Int? = null) : JsonSerialisable {
-
-    val identifier by lazy { registry.getKey(value)!! }
+open class WikiSubject(val reference: WikiReference, val renewable: Boolean? = null, val order: Int) : JsonSerialisable, Comparable<WikiSubject> {
 
     override fun toJson() = JsonObject().also {
-        it.addProperty("registry", registry.key().location().toString())
-        it.addProperty("identifier", identifier.toString())
+        it.addProperty("registry", reference.registry.toString())
+        it.addProperty("identifier", reference.identifier.toString())
         it.addProperty("order", order)
-        if (renewable == null && (value is Block || value is Item)) error("Article subject ${ResourceKey.create(registry.key(), identifier)} is a block or item and should have renewable property specified.")
+        if (renewable == null && (reference.getBlock() != null || reference.getItem() != null)) error("Article subject $reference is a block or item and should have renewable property specified.")
         it.addOrNull("renewable", renewable)
         it.addOrNull("attributes", getAttributes())
     }
 
-    open fun getAttributes(): JsonObject? = when (value) {
-        is Block -> getBlockAttributes(value)
-        is Item -> getItemAttributes(value)
-        else -> null
+    open fun getAttributes(): JsonObject? {
+        val block = reference.getBlock()
+        if (block != null) return getBlockAttributes(block)
+
+        val item = reference.getItem()
+        if (item != null) return getItemAttributes(item)
+
+        return null
     }
 
     open fun getBlockAttributes(block: Block) = JsonObject().also {
@@ -83,5 +85,7 @@ open class WikiSubject<T : Any>(val registry: Registry<T>, val value: T, val ren
     protected fun <I : Any> getTagJson(registry: Registry<I>, value: I) = JsonArray().also {
         it.addStrings(registry.getHolderOrThrow(registry.getResourceKey(value).orElseThrow()).tags().map(TagKey<I>::toString).toList().toTypedArray())
     }
+
+    override operator fun compareTo(other: WikiSubject) = order.compareTo(other.order)
 
 }

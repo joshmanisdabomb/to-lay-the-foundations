@@ -28,6 +28,11 @@ sealed class Library<I, V>(val modid: String) {
         return entries
     }
 
+    fun buildOnce(): Map<String, LibraryEntry<out I, out V>> {
+        if (initialised) return entries
+        return build()
+    }
+
     open fun afterBuild() = Unit
 
     open fun afterBuild(entry: LibraryEntry<out I, out V>) = Unit
@@ -44,11 +49,11 @@ sealed class Library<I, V>(val modid: String) {
 
     override fun toString() = "$modid ${this.javaClass}"
 
-    protected operator fun <J : I, W : V> invoke(builder: (J) -> W, initial: (LibraryEntry<J, W>) -> J): LibraryEntry<J, W> {
+    protected operator fun <J : I, W : V> invoke(builder: LibraryEntry<out I, out V>.(J) -> W, initial: (LibraryEntry<J, W>) -> J): LibraryEntry<J, W> {
         return LibraryEntry(builder, initial)
     }
 
-    inner class LibraryEntry<J : I, W : V>(val builder: (J) -> W, val initial: (LibraryEntry<J, W>) -> J) {
+    inner class LibraryEntry<J : I, W : V>(val builder: LibraryEntry<out I, out V>.(J) -> W, val initial: (LibraryEntry<J, W>) -> J) {
 
         lateinit var property: KProperty<*>
             private set
@@ -58,6 +63,8 @@ sealed class Library<I, V>(val modid: String) {
 
         var initialised = false
             private set
+        private var _input: J? = null
+        val input get() = _input!!
         lateinit var getter: () -> W
             private set
         val value by lazy { getter() }
@@ -82,7 +89,9 @@ sealed class Library<I, V>(val modid: String) {
             if (initialised) {
                 throw LibraryException("${property.name} in ${this@Library} is already built.")
             }
-            getter = { builder(initial(this)) }
+            val input = initial(this)
+            _input = input
+            getter = { builder(this, input) }
             initialised = true
         }
 
