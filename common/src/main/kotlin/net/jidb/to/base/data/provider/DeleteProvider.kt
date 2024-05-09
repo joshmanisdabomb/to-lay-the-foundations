@@ -18,7 +18,7 @@ class DeleteProvider(val output: PackOutput, val paths: (Path) -> List<Path>) : 
         for (target in targets) {
             var input: String? = ""
             while (input != null) {
-                println("Type 'Y' to delete all contents of '$target', or 'N' to skip.")
+                print("Type 'Y' to delete all contents of '$target', or 'N' to skip: ")
                 input = readln().uppercase()
                 when (input) {
                     "Y" -> {

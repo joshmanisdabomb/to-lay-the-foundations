@@ -54,6 +54,7 @@ class ToBaseWikiProvider(output: FabricDataOutput) : WikiProvider(output) {
         ))
 
         println(output.outputFolder)
+        val wt = WikiTranslations()
         val loc2 = loc.suffix("2", "")
         val article2 = WikiArticleBuilder(loc2)
             .addPage(ToBaseMod.MOD_ID, WikiPageMarkdownBuilder()
@@ -62,8 +63,7 @@ class ToBaseWikiProvider(output: FabricDataOutput) : WikiProvider(output) {
                 .setFlavorText("You won't want to miss this block!")
                 .addSubject(WikiSubject(WikiReference.of(ToBaseBlockLibrary.test_block_2), false, 1))
             )
-            .build(WikiTranslations())
-        println()
+            .build(wt)
 
         return mapOf(loc to article, loc2 to article2)
     }

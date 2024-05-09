@@ -60,8 +60,9 @@ abstract class WikiPageAbstractBuilder : WikiPageBuilder {
     }
 
     override fun build(translations: WikiTranslations): WikiPage {
+        val page = WikiPage(this.name(), this.flavor(), this.getContent(), subjects)
         translations.store(this)
-        return WikiPage(this.name(), this.flavor(), this.getContent(), subjects)
+        return page
     }
 
     abstract fun getContent(): WikiContent
