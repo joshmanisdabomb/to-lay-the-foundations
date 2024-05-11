@@ -29,16 +29,13 @@ object ToBaseDataGenerator : DataGeneratorEntrypoint {
         pack.addProvider { output: PackOutput ->
             HttpPostProvider(output)
                 .setURL(URL("http://localhost:8000/api/content/update"))
-                .modifyConnection {
-                    it.setRequestProperty("Content-Type", "application/json")
-                }
-                .setBody(JsonObject().also {
+                .addJsonContent("body", JsonObject().also {
                     it.addProperty("key", System.getProperty("net.jidb.to.base.data.token"))
                     it.addStringObject("mod", mapOf("id" to ToBaseMod.MOD_ID, "version" to Platform.getMod(ToBaseMod.MOD_ID).version))
                 })
-                .setPathBuilder {
+                .addZipContent("content", "content.zip") {
                     val resources = Path.of(it.toString().replace("fabric", "common").replace("generated", "resources"))
-                    listOf(resources.resolve("assets/${ToBaseMod.MOD_ID}/wiki"))
+                    listOf(resources.resolve("assets/${ToBaseMod.MOD_ID}/wiki") to null)
                 }
         }
     }
