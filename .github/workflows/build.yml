@@ -1,4 +1,4 @@
-name: Build Mod
+name: Upload Build and Wiki Content
 
 on:
   push
@@ -6,6 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Upload Build and Wiki Content
     steps:
       - uses: actions/checkout@v3
       
@@ -33,27 +34,41 @@ jobs:
       - name: Commit Gradle Property Changes
         run: cp gradle.properties.ci gradle.properties
         
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v3.3.2
-        with:
-          arguments: build
+      - name: Setup Gradle
+        id: setup
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Jars
+        id: build
+        run: ./gradlew build
+        if: steps.setup.outcome == 'success'
                 
       - name: Rename Source Jar
         run: mv hybrid/build/libs/*-sources.jar build/libs/sources.jar
+        if: steps.build.outcome == 'success'
                 
       - name: Rename Forge Jar
         run: rm forge/build/libs/*-{sources,shadow}.jar && mv forge/build/libs/*.jar build/libs/forge.jar
+        if: steps.build.outcome == 'success'
 
       - name: Rename Fabric Jar
         run: rm fabric/build/libs/*-{sources,shadow}.jar && mv fabric/build/libs/*.jar build/libs/fabric.jar
+        if: steps.build.outcome == 'success'
 
       - name: Rename Quilt Jar
         run: rm quilt/build/libs/*-{sources,shadow}.jar && mv quilt/build/libs/*.jar build/libs/quilt.jar
+        if: steps.build.outcome == 'success'
         
       - name: Deploy Built Jars
         uses: fjogeleit/http-request-action@v1
+        if: steps.build.outcome == 'success'
         with:
           url: ${{ secrets.BUILD_UPLOAD_ENDPOINT }}
           method: 'POST'
           data: '{"key": "${{ secrets.BUILD_UPLOAD_KEY }}", "repository": "${{ github.repository }}", "run_id": "${{ github.run_id }}", "run_number": "${{ github.run_number }}", "ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}"}'
           files: '{"forge": "${{ github.workspace }}/build/libs/forge.jar", "fabric": "${{ github.workspace }}/build/libs/fabric.jar", "quilt": "${{ github.workspace }}/build/libs/quilt.jar", "source": "${{ github.workspace }}/build/libs/sources.jar", "gradle": "${{ github.workspace }}/gradle.properties"}'
+
+      - name: Generate Data
+        id: data
+        run: ./gradlew fabric:runDatagen
+        if: steps.setup.outcome == 'success'
