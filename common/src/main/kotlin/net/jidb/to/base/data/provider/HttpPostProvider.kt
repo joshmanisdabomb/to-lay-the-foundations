@@ -16,7 +16,6 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import kotlin.io.path.inputStream
 
-
 open class HttpPostProvider(val output: PackOutput) : DataProvider {
 
     private var url: URL? = null
