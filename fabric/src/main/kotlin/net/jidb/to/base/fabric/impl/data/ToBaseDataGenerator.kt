@@ -32,10 +32,12 @@ object ToBaseDataGenerator : DataGeneratorEntrypoint {
                 .addJsonContent("body", JsonObject().also {
                     it.addProperty("key", System.getProperty("net.jidb.to.base.data.token"))
                     it.addStringObject("mod", mapOf("id" to ToBaseMod.MOD_ID, "version" to Platform.getMod(ToBaseMod.MOD_ID).version))
+                    it.addStringObject("mc", mapOf("id" to "minecraft", "version" to Platform.getMinecraftVersion()))
                 })
+                .addJsonContent("meta", ToBaseWikiMeta.toJson())
                 .addZipContent("content", "content.zip") {
                     val resources = Path.of(it.toString().replace("fabric", "common").replace("generated", "resources"))
-                    listOf(resources.resolve("assets/${ToBaseMod.MOD_ID}/wiki") to null)
+                    listOf(resources.resolve("assets/${ToBaseMod.MOD_ID}/wiki") to ToBaseMod.MOD_ID)
                 }
         }
     }

@@ -2,6 +2,7 @@ package net.jidb.to.base.data.provider
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
+import net.jidb.to.base.convenience.json.JsonSerialisable
 import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput
@@ -44,6 +45,7 @@ open class HttpPostProvider(val output: PackOutput) : DataProvider {
     fun addContent(name: String, type: String, body: ByteArray, filename: String? = null) = addContent(name, type, filename) { body }
     fun addContent(name: String, type: String, body: String, filename: String? = null) = addContent(name, type, filename) { body.toByteArray() }
     fun addJsonContent(name: String, json: JsonElement, filename: String? = null) = addContent(name, "application/json", GSON.toJson(json), filename)
+    fun addJsonContent(name: String, `object`: JsonSerialisable, filename: String? = null) = addJsonContent(name, `object`.toJson(), filename)
     open fun addZipContent(name: String, filename: String? = null, paths: (Path) -> List<Pair<Path, String?>>): HttpPostProvider {
         return addContent(name, "application/zip", filename) {
             val paths = paths(output.outputFolder)
@@ -70,16 +72,16 @@ open class HttpPostProvider(val output: PackOutput) : DataProvider {
 
     override fun run(cachedOutput: CachedOutput): CompletableFuture<*> {
         return CompletableFuture.runAsync {
-            try {
-                val url = this.getFinalURL()
-                val connection = (url.openConnection() as HttpURLConnection).apply {
-                    requestMethod = "POST"
-                    doOutput = true
-                    setRequestProperty("Accept", "application/json")
-                    setRequestProperty("Content-Type", "multipart/form-data;boundary=$BOUNDARY")
-                    modify(this)
-                }
+            val url = this.getFinalURL()
+            val connection = (url.openConnection() as HttpURLConnection).apply {
+                requestMethod = "POST"
+                doOutput = true
+                setRequestProperty("Accept", "application/json")
+                setRequestProperty("Content-Type", "multipart/form-data;boundary=$BOUNDARY")
+                modify(this)
+            }
 
+            try {
                 val stream = connection.outputStream
 
                 content.forEach { it.add(stream) }
@@ -95,6 +97,11 @@ open class HttpPostProvider(val output: PackOutput) : DataProvider {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
+
+            connection.errorStream?.bufferedReader()?.use {
+                it.lines().forEach(System.err::println)
+            }
+            connection.disconnect()
         }
     }
 
