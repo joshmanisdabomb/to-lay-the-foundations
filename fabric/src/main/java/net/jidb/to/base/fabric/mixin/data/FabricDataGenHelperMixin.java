@@ -11,11 +11,11 @@ public abstract class FabricDataGenHelperMixin {
 
     @Inject(method = "runInternal()V", at = @At("TAIL"))
     private static void exit(CallbackInfo ci) {
-        boolean exit = System.getProperty("net.jidb.to.base.data.ci") != null;
+        boolean exit = System.getenv("NET_JIDB_TO_BASE_DATA_CI") != null;
         if (exit) {
             System.exit(0);
         } else {
-            System.out.println("Data generation complete. Pass a property to net.jidb.to.base.data.ci to automatically close next run.");
+            System.out.println("Data generation complete. Define environment variable NET_JIDB_TO_BASE_DATA_CI to automatically close next run.");
         }
     }
 

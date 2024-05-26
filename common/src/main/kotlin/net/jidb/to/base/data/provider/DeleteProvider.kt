@@ -15,9 +15,9 @@ class DeleteProvider(val output: PackOutput, val paths: (Path) -> List<Path>) : 
 
     @OptIn(ExperimentalPathApi::class)
     override fun run(cached: CachedOutput) = CompletableFuture.runAsync {
-        val safe = System.getProperty("net.jidb.to.base.data.safe")
+        val safe = System.getenv("NET_JIDB_TO_BASE_DATA_SAFE")
         if (safe == null) {
-            System.err.println("Java property net.jidb.to.base.data.safe not set, refusing to delete any files or folders.")
+            System.err.println("Environment variable NET_JIDB_TO_BASE_DATA_SAFE not set, refusing to delete any files or folders.")
             return@runAsync
         }
         val safes = safe.split(";")
@@ -26,7 +26,7 @@ class DeleteProvider(val output: PackOutput, val paths: (Path) -> List<Path>) : 
         next@ for (target in targets) {
             val abs = target.absolute()
             if (safes.none { abs.startsWith(it) }) {
-                System.err.println("Data provider tried to delete '$abs', but this is not defined by the user's property net.jidb.to.base.data.safe as a safe path to delete.")
+                System.err.println("Data provider tried to delete '$abs', but this is not defined in NET_JIDB_TO_BASE_DATA_SAFE as a safe path to delete.")
                 continue@next
             }
 

@@ -28,13 +28,13 @@ object ToBaseDataGenerator : DataGeneratorEntrypoint {
         })
         pack.addProvider(CopyProvider.factory { Path.of(it.toString().replace("fabric", "common").replace("generated", "resources")) })
 
-        val post = System.getProperty("net.jidb.to.base.data.api")
+        val post = System.getenv("NET_JIDB_TO_BASE_DATA_API")
         if (post != null) {
             pack.addProvider(DataProvider.Factory {
                 HttpPostProvider(it)
                     .setURL(URL(post))
                     .addJsonContent("body", JsonObject().also {
-                        it.addProperty("key", System.getProperty("net.jidb.to.base.data.token"))
+                        it.addProperty("key", System.getenv("NET_JIDB_TO_BASE_DATA_TOKEN"))
                         it.addStringObject("mod", mapOf("id" to ToBaseMod.MOD_ID, "version" to Platform.getMod(ToBaseMod.MOD_ID).version))
                         it.addStringObject("mc", mapOf("id" to "minecraft", "version" to Platform.getMinecraftVersion()))
                     })
@@ -45,7 +45,7 @@ object ToBaseDataGenerator : DataGeneratorEntrypoint {
                     }
             })
         } else {
-            System.err.println("Java property net.jidb.to.base.data.api missing, no POST request will be sent to API.")
+            System.err.println("Environment variable NET_JIDB_TO_BASE_DATA_API missing, no POST request will be sent to API.")
         }
     }
 }
