@@ -2,9 +2,9 @@ package net.jidb.to.base.wiki
 
 import com.google.gson.JsonObject
 import net.jidb.to.base.convenience.json.JsonSerialisable
+import net.jidb.to.base.extension.addOrNull
 import net.jidb.to.base.extension.addSerialisableArray
 import net.jidb.to.base.extension.addStringArray
-import net.jidb.to.base.extension.addOrNull
 import net.jidb.to.base.wiki.changelog.WikiChangelog
 import net.jidb.to.base.wiki.recipe.WikiRecipes
 import net.jidb.to.base.wiki.reference.WikiImage

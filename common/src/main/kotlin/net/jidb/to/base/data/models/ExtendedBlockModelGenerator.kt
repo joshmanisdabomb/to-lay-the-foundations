@@ -6,7 +6,10 @@ import net.jidb.to.base.extension.loopGet
 import net.jidb.to.base.extension.plus
 import net.minecraft.core.Direction
 import net.minecraft.data.models.BlockModelGenerators
-import net.minecraft.data.models.blockstates.*
+import net.minecraft.data.models.blockstates.MultiVariantGenerator
+import net.minecraft.data.models.blockstates.PropertyDispatch
+import net.minecraft.data.models.blockstates.Variant
+import net.minecraft.data.models.blockstates.VariantProperties
 import net.minecraft.data.models.blockstates.VariantProperties.Rotation
 import net.minecraft.data.models.model.TexturedModel
 import net.minecraft.world.level.block.Block

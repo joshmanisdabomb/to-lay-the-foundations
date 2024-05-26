@@ -1,17 +1,14 @@
 package net.jidb.to.base.wiki.reference
 
 import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
 import net.jidb.to.base.convenience.json.JsonSerialisable
 import net.jidb.to.base.wiki.WikiArticle
 import net.jidb.to.base.wiki.WikiPage
 import net.minecraft.Util
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffect
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.enchantment.Enchantment

@@ -5,7 +5,9 @@ import net.jidb.to.base.convenience.block.DirectionalPlacingBlock
 import net.jidb.to.base.convenience.block.HorizontalPlacingBlock
 import net.jidb.to.base.library.SimpleDeferredRegisterLibrary
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.level.block.*
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.RotatedPillarBlock
+import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 

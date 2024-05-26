@@ -1,6 +1,5 @@
 package net.jidb.to.base.wiki.builder
 
-import net.jidb.to.base.ToBaseMod
 import net.jidb.to.base.wiki.WikiConstantLibrary
 
 class WikiTranslations {

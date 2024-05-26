@@ -1,7 +1,6 @@
 package net.jidb.to.base.extension
 
 import java.text.DecimalFormat
-import kotlin.math.min
 import kotlin.math.sign
 
 private val decimals = mutableMapOf<Int, DecimalFormat>()

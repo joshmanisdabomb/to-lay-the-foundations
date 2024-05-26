@@ -3,9 +3,7 @@ package net.jidb.to.base.impl
 import dev.architectury.registry.CreativeTabRegistry
 import net.jidb.to.base.ToBaseMod
 import net.jidb.to.base.library.AdvancedDeferredRegisterLibrary
-import net.jidb.to.base.library.DeferredRegisterLibrary
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 
