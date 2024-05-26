@@ -68,7 +68,12 @@ jobs:
           data: '{"key": "${{ secrets.BUILD_UPLOAD_KEY }}", "repository": "${{ github.repository }}", "run_id": "${{ github.run_id }}", "run_number": "${{ github.run_number }}", "ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}"}'
           files: '{"forge": "${{ github.workspace }}/build/libs/forge.jar", "fabric": "${{ github.workspace }}/build/libs/fabric.jar", "quilt": "${{ github.workspace }}/build/libs/quilt.jar", "source": "${{ github.workspace }}/build/libs/sources.jar", "gradle": "${{ github.workspace }}/gradle.properties"}'
 
-      - name: Generate Data
+      - name: Generate Data and Submit Content
         id: data
+        env:
+          NET_JIDB_TO_BASE_DATA_CI: true
+          NET_JIDB_TO_BASE_DATA_API: ${{ secrets.WIKI_UPLOAD_ENDPOINT }}
+          NET_JIDB_TO_BASE_DATA_TOKEN: ${{ secrets.WIKI_UPLOAD_KEY }}
+          NET_JIDB_TO_BASE_DATA_SAFE: ${{ github.workspace }}/common/src/main/resources
         run: ./gradlew fabric:runDatagen
         if: steps.setup.outcome == 'success'
