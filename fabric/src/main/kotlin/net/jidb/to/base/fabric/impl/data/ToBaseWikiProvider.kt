@@ -53,7 +53,6 @@ class ToBaseWikiProvider(output: FabricDataOutput) : WikiProvider(output) {
             )
         ))
 
-        println(output.outputFolder)
         val wt = WikiTranslations()
         val loc2 = loc.suffix("2", "")
         val article2 = WikiArticleBuilder(loc2)

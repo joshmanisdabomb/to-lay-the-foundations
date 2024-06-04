@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
 import kotlin.io.path.inputStream
-
+import kotlin.system.exitProcess
 
 open class HttpPostProvider(val output: PackOutput) : DataProvider {
 
@@ -96,12 +96,15 @@ open class HttpPostProvider(val output: PackOutput) : DataProvider {
                 connection.disconnect()
             } catch (e: IOException) {
                 e.printStackTrace()
+                connection.errorStream?.bufferedReader()?.use {
+                    it.lines().forEach(System.err::println)
+                }
+                if (System.getenv("NET_JIDB_TO_BASE_DATA_CI") != null) {
+                    exitProcess(1)
+                }
+            } finally {
+                connection.disconnect()
             }
-
-            connection.errorStream?.bufferedReader()?.use {
-                it.lines().forEach(System.err::println)
-            }
-            connection.disconnect()
         }
     }
 

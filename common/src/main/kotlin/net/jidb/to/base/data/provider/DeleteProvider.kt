@@ -6,6 +6,7 @@ import net.minecraft.data.PackOutput
 import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
 import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.absolute
 import kotlin.io.path.deleteRecursively
 
 class DeleteProvider(val output: PackOutput, val paths: (Path) -> List<Path>) : DataProvider {
@@ -14,23 +15,23 @@ class DeleteProvider(val output: PackOutput, val paths: (Path) -> List<Path>) : 
 
     @OptIn(ExperimentalPathApi::class)
     override fun run(cached: CachedOutput) = CompletableFuture.runAsync {
+        val safe = System.getenv("NET_JIDB_TO_BASE_DATA_SAFE")
+        if (safe == null) {
+            System.err.println("Environment variable NET_JIDB_TO_BASE_DATA_SAFE not set, refusing to delete any files or folders.")
+            return@runAsync
+        }
+        val safes = safe.split(";")
+
         val targets = paths(output.outputFolder)
-        for (target in targets) {
-            var input: String? = ""
-            while (input != null) {
-                print("Type 'Y' to delete all contents of '$target', or 'N' to skip: ")
-                input = readln().uppercase()
-                when (input) {
-                    "Y" -> {
-                        target.deleteRecursively()
-                        println("Deleted '$target'.")
-                        input = null
-                    }
-                    "N" -> {
-                        input = null
-                    }
-                }
+        next@ for (target in targets) {
+            val abs = target.absolute()
+            if (safes.none { abs.startsWith(it) }) {
+                System.err.println("Data provider tried to delete '$abs', but this is not defined in NET_JIDB_TO_BASE_DATA_SAFE as a safe path to delete.")
+                continue@next
             }
+
+            abs.deleteRecursively()
+            println("Deleted '$abs'.")
         }
     }
 
