@@ -13,6 +13,6 @@ class WikiTranslations {
 
     fun includeConstants() = include(WikiConstantLibrary.translations)
 
-    fun store(page: WikiPageBuilder) = include(page.translations.mapIndexed { index, map -> page.getTranslationKey(index) to map }.toMap())
+    fun store(page: WikiArticleBuilder) = include(page.translations.mapIndexed { index, map -> page.getTranslationKey(index) to map }.toMap())
 
 }

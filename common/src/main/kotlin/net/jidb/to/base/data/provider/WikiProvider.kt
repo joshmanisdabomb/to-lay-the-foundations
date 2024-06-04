@@ -1,7 +1,7 @@
 package net.jidb.to.base.data.provider
 
-import net.jidb.to.base.wiki.WikiArticle
 import net.jidb.to.base.wiki.WikiConstantLibrary
+import net.jidb.to.base.wiki.WikiArticle
 import net.minecraft.data.CachedOutput
 import net.minecraft.data.DataProvider
 import net.minecraft.data.PackOutput

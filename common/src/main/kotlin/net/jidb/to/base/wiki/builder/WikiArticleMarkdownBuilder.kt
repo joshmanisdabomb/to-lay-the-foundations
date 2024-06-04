@@ -14,9 +14,9 @@ import net.minecraft.resources.ResourceLocation
 import java.nio.file.Files
 import java.nio.file.Path
 
-class WikiPageMarkdownBuilder(val files: MutableMap<String, Path> = mutableMapOf()) : WikiPageAbstractBuilder() {
+class WikiArticleMarkdownBuilder(identifier: ResourceLocation, val files: MutableMap<String, Path> = mutableMapOf()) : WikiArticleAbstractBuilder(identifier) {
 
-    fun setFile(file: Path, language: String = "en_us"): WikiPageMarkdownBuilder {
+    fun setFile(file: Path, language: String = "en_us"): WikiArticleMarkdownBuilder {
         this.files[language] = file
         return this
     }

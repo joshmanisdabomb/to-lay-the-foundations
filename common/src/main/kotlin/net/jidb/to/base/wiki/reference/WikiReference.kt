@@ -3,7 +3,6 @@ package net.jidb.to.base.wiki.reference
 import com.google.gson.JsonObject
 import net.jidb.to.base.convenience.json.JsonSerialisable
 import net.jidb.to.base.wiki.WikiArticle
-import net.jidb.to.base.wiki.WikiPage
 import net.minecraft.Util
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
@@ -38,8 +37,7 @@ abstract class WikiReference : JsonSerialisable {
     open fun getEnchantment() = BuiltInRegistries.REGISTRY.get(registry)?.get(identifier) as? Enchantment
 
     companion object {
-        fun of(article: WikiArticle) = of(article.pages.toList().first().second)
-        fun of(page: WikiPage) = page.subjects.minOf { it }
+        fun of(article: WikiArticle) = article.subjects.minOf { it }
         fun of(block: Block) = WikiRegistryReference(BuiltInRegistries.BLOCK, block)
         fun of(item: Item) = WikiRegistryReference(BuiltInRegistries.ITEM, item)
         fun of(entity: EntityType<*>) = WikiRegistryReference(BuiltInRegistries.ENTITY_TYPE, entity)
